@@ -11,10 +11,16 @@ export class Signup extends Component {
     confirmPassword: "",
   };
   handleOnChange = (event) => {
+    console.log('BEFORE SET STATE: ');
     console.log(event.target.name, ":", event.target.value);
     this.setState({
       [event.target.name]: event.target.value,
+    }, () => {
+        console.log('INSIDE SET STATE: ');
+        console.log(event.target.name, ":", event.target.value)
     });
+    console.log('AFTER SET STATE: ');
+    console.log(event.target.name, ":", event.target.value);
   };
 
   handleOnSubmit = (event) => {

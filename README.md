@@ -416,3 +416,23 @@ export class Signup extends Component {
 }
 export default Signup;
 ```
+* IMPORTANT TO NOTE SET STATE IS ASYNC 
+
+```JAVASCRIPT
+  handleOnChange = (event) => {
+    //RUNS FIRST 
+    console.log('BEFORE SET STATE: ');
+    console.log(event.target.name, ":", event.target.value);
+    this.setState({
+      [event.target.name]: event.target.value,
+    }, () => {
+        //RUNS LAST 3
+        console.log('INSIDE SET STATE: ');
+        console.log(event.target.name, ":", event.target.value)
+    });
+    // RUNS SECOND 2
+    console.log('AFTER SET STATE: ');
+    console.log(event.target.name, ":", event.target.value);
+  };
+```
+![](./Images/image-3.jpg)
