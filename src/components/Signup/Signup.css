@@ -48,22 +48,21 @@ body {
 }
 
 .form-group-inline .inline-container input {
-  padding: 5px 4px;
-  width: 250px;
+  padding: 5px 5px;
+  width: 245px;
   border-radius: 8px;
 }
 
 .form-group-block {
-  margin-left: 82px;
+  margin-left: 78px;
+  margin-right: 20px;
   margin-top: 20px;
-  
 }
 
 .block-container label {
   display: block;
   margin-bottom: 3px;
   margin-top: 20px;
-  
 }
 
 .form-group-block .block-container input {
