@@ -435,4 +435,23 @@ export default Signup;
     console.log(event.target.name, ":", event.target.value);
   };
 ```
+
 ![](./Images/image-3.jpg)
+
+========= CONSOLE LOG TO SHOW SET STATE CALLBACK
+```JAVASCRIPT
+  handleOnChange = (event) => {
+    console.log('SET STATE: 1', this.state.firstName);
+    this.setState(
+    {  
+      [event.target.name]: event.target.value,
+    }, () => {
+        console.log('INSIDE SET STATE CALLBACK: 2', this.state.firstName);
+    });
+    console.log('THE VALUE OF THIS.SET.STATE.FIRST_NAME: 3',this.state.firstName );
+    if (this.state.firstName.length === 0) {
+        console.log('CANNOT BE EMPTY: 4', this.state.firstName.length);
+    } 
+  };
+```
+![](./Images/image-4.jpg)

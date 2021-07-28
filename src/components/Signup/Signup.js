@@ -11,16 +11,17 @@ export class Signup extends Component {
     confirmPassword: "",
   };
   handleOnChange = (event) => {
-    console.log('BEFORE SET STATE: ');
-    console.log(event.target.name, ":", event.target.value);
-    this.setState({
+    console.log('SET STATE: 1', this.state.firstName);
+    this.setState(
+    {  
       [event.target.name]: event.target.value,
     }, () => {
-        console.log('INSIDE SET STATE: ');
-        console.log(event.target.name, ":", event.target.value)
+        console.log('INSIDE SET STATE CALLBACK: 2', this.state.firstName);
     });
-    console.log('AFTER SET STATE: ');
-    console.log(event.target.name, ":", event.target.value);
+    console.log('THE VALUE OF THIS.SET.STATE.FIRST_NAME: 3',this.state.firstName );
+    if (this.state.firstName.length === 0) {
+        console.log('CANNOT BE EMPTY: 4', this.state.firstName.length);
+    } 
   };
 
   handleOnSubmit = (event) => {
