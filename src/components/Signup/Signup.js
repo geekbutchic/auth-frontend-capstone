@@ -9,19 +9,31 @@ export class Signup extends Component {
     email: "",
     password: "",
     confirmPassword: "",
+    firstNameError: "",
+    lastNameError: "",
+    emailError: "",
+    usernameError: "",
+    passwordError: "",
+    confirmPasswordError: "",
   };
+
   handleOnChange = (event) => {
-    console.log('SET STATE: 1', this.state.firstName);
+    console.log("SET STATE: 1", this.state.firstName);
     this.setState(
-    {  
-      [event.target.name]: event.target.value,
-    }, () => {
-        console.log('INSIDE SET STATE CALLBACK: 2', this.state.firstName);
-    });
-    console.log('THE VALUE OF THIS.SET.STATE.FIRST_NAME: 3',this.state.firstName );
+      {
+        [event.target.name]: event.target.value,
+      },
+      () => {
+        console.log("INSIDE SET STATE CALLBACK: 2", this.state.firstName);
+      }
+    );
+    console.log(
+      "THE VALUE OF THIS.SET.STATE.FIRST_NAME: 3",
+      this.state.firstName
+    );
     if (this.state.firstName.length === 0) {
-        console.log('CANNOT BE EMPTY: 4', this.state.firstName.length);
-    } 
+      console.log("CANNOT BE EMPTY: 4", this.state.firstName.length);
+    }
   };
 
   handleOnSubmit = (event) => {
@@ -29,9 +41,56 @@ export class Signup extends Component {
     console.log(this.state);
   };
 
+  handleOnBlur = (event) => {
+    console.log(event.target.name);
+    console.log("HANDLE ON BLUR TRIGGERED");
+    if (this.state.firstName.length === 0) {
+      this.setState({
+        firstNameError: "First Name Cannot Be Empty!",
+      });
+    }
+    if (this.state.lastName.length === 0) {
+      this.setState({
+        lastNameError: "Last Name Cannot Be Empty!",
+      });
+    }
+    if (this.state.email.length === 0) {
+      this.setState({
+        emailError: "Email Cannot Be Empty!",
+      });
+    }
+    if (this.state.username.length === 0) {
+      this.setState({
+        usernameError: "Username Cannot Be Empty!",
+      });
+    }
+    if (this.state.password.length === 0) {
+      this.setState({
+        passwordError: "Password Cannot Be Empty!",
+      });
+    }
+    if (this.state.confirmPassword.length === 0) {
+      this.setState({
+        confirmPasswordError: "Confirm Password Cannot Be Empty!",
+      });
+    }
+  };
+
   render() {
-    const { firstName, lastName, username, email, password, confirmPassword } =
-      this.state;
+    const {
+      firstName,
+      lastName,
+      username,
+      email,
+      password,
+      confirmPassword,
+      firstNameError,
+      lastNameError,
+      emailError,
+      usernameError,
+      passwordError,
+      confirmPasswordError,
+    } = this.state;
     return (
       <div className="container">
         <div className="form-text">Sign up</div>
@@ -47,7 +106,12 @@ export class Signup extends Component {
                   placeholder="First Name"
                   name="firstName"
                   onChange={this.handleOnChange}
+                  autoFocus
+                  onBlur={this.handleOnBlur}
                 />
+                <div className="errorMessage pt-1 font-semibold">
+                  {firstNameError && firstNameError}
+                </div>
               </div>
               <div className="inline-container">
                 <label htmlFor="lastName">Last Name</label>
@@ -58,7 +122,12 @@ export class Signup extends Component {
                   placeholder="Last Name"
                   name="lastName"
                   onChange={this.handleOnChange}
+                  autoFocus
+                  onBlur={this.handleOnBlur}
                 />
+                <div className="errorMessage pt-1 font-semibold">
+                  {lastNameError && lastNameError}
+                </div>
               </div>
             </div>
             <div className="form-group-block">
@@ -71,7 +140,12 @@ export class Signup extends Component {
                   placeholder="Email"
                   name="email"
                   onChange={this.handleOnChange}
+                  autoFocus
+                  onBlur={this.handleOnBlur}
                 />
+                <div className="errorMessage pt-1 font-semibold">
+                  {emailError && emailError}
+                </div>
               </div>
             </div>
             <div className="form-group-block">
@@ -84,7 +158,12 @@ export class Signup extends Component {
                   placeholder="Username"
                   name="username"
                   onChange={this.handleOnChange}
+                  autoFocus
+                  onBlur={this.handleOnBlur}
                 />
+                <div className="errorMessage pt-1 font-semibold">
+                  {usernameError && usernameError}
+                </div>
               </div>
             </div>
             <div className="form-group-block">
@@ -97,7 +176,12 @@ export class Signup extends Component {
                   placeholder="Password"
                   name="password"
                   onChange={this.handleOnChange}
+                  autoFocus
+                  onBlur={this.handleOnBlur}
                 />
+                <div className="errorMessage pt-1 font-semibold">
+                  {passwordError && passwordError}
+                </div>
               </div>
             </div>
             <div className="form-group-block">
@@ -110,7 +194,12 @@ export class Signup extends Component {
                   placeholder="Confirm Password"
                   name="confirmPassword"
                   onChange={this.handleOnChange}
+                  autoFocus
+                  onBlur={this.handleOnBlur}
                 />
+                <div className="errorMessage pt-1 font-semibold">
+                  {confirmPasswordError && confirmPasswordError}
+                </div>
               </div>
             </div>
             <div className="button-container">

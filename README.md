@@ -455,3 +455,49 @@ export default Signup;
   };
 ```
 ![](./Images/image-4.jpg)
+
+======= `ADD AUTOFOCUS TO INPUT FORM`
+
+```JAVASCRIPT
+<input
+  type="text"
+  id="firstName"
+  value={firstName}
+  placeholder="First Name"
+  name="firstName"
+  onChange={this.handleOnChange}
+  autoFocus //WILL START CURSOR WITHOUT CLICKING TO INPUT FIELD
+/>
+```
+======= `ON BLUR`
+
+```JAVASCRIPT
+//ADD INDEPENDENT FIRST_NAME_ERROR MESSAGE
+state = {
+  firstName: "",
+  lastName: "",
+  username: "",
+  email: "",
+  password: "",
+  confirmPassword: "",
+  firstNameError: "",//<-
+};
+//ADD TO STATE
+const { 
+    firstName, 
+    lastName, 
+    username, 
+    email, 
+    password, 
+    confirmPassword,
+    firstNameError, //<-
+} = this.state;  
+
+handleOnBlur = (event) => {
+    console.log(event.target.name);
+    console.log('HANDLE ON BLUR TRIGGERED');
+}
+//BELOW AUTO_FOCUS CALL FUNCTION
+onBlur={this.handleOnBlur}//<-
+```
+
