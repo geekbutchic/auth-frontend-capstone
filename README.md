@@ -466,7 +466,8 @@ export default Signup;
   placeholder="First Name"
   name="firstName"
   onChange={this.handleOnChange}
-  autoFocus //WILL START CURSOR WITHOUT CLICKING TO INPUT FIELD
+  autoFocus //WILL START CURSOR WITHOUT CLICKING TO INPUT FIELD 
+//TO NOTE AUTO_FOCUS WILL ONLY BE APPLIED TO FIRST INPUT
 />
 ```
 ======= `ON BLUR`
@@ -494,10 +495,56 @@ const {
 } = this.state;  
 
 handleOnBlur = (event) => {
-    console.log(event.target.name);
-    console.log('HANDLE ON BLUR TRIGGERED');
-}
-//BELOW AUTO_FOCUS CALL FUNCTION
+  console.log(event.target.name);
+  console.log("Handle onBlur Triggered");
+  if (this.state[event.target.name].length === 0) {
+    this.setState({
+      [`${event.target.name}Error`]: `${event.target.placeholder}cannot be empty!`,
+    });
+  }
+};
+//ADD ON_BLUR BELOW_ON_CHANGE
 onBlur={this.handleOnBlur}//<-
 ```
+* EXAMPLE 
 
+```JAVASCRIPT
+<input
+type="text"
+id="firstName"
+value={firstName}
+placeholder="First Name"
+name="firstName"
+onChange={this.handleOnChange}
+autoFocus
+onBlur={this.handleOnBlur}
+/>
+```
+* MESSAGES SHOULD NOW SHOW BUT INTRODUCES ANOTHER PROBLEM -> ERROR_MESSAGES CONTINUE TO APPEAR EVEN AFTER INPUT FIELD IS ENTERED.
+* TO ADDRESS THIS WE NEED TO ADD AN ELSE STATEMENT WITH A NEW STATE.
+
+```JAVASCRIPT
+handleOnChange = (event) => {
+  this.setState(
+    {
+      [event.target.name]: event.target.value,
+    },
+    () => {
+      if (event.target.name === "firstName") {
+        if (this.state.firstName.length > 0) {
+          this.setState({
+            firstNameError: "", 
+          });
+        } else {
+            this.setState({
+                firstNameError: `${event.target.placeholder}cannot be empty!`
+            })
+        }
+      }
+    }
+  );
+};
+//IF NAME === FIRST_NAME CHECK LENGTH 
+//IF GREATER THAN ZERO RESET TO EMPTY OBJECT
+//IF USER ERASES NAME IT RETURNS ERROR MESSAGE
+```

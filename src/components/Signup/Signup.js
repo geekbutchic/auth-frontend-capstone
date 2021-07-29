@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { isAlpha, isEmail, isAlphanumeric, isStrongPassword } from "validator";
 import "./Signup.css";
 
 export class Signup extends Component {
@@ -11,28 +12,125 @@ export class Signup extends Component {
     confirmPassword: "",
     firstNameError: "",
     lastNameError: "",
-    emailError: "",
     usernameError: "",
+    emailError: "",
     passwordError: "",
     confirmPasswordError: "",
   };
 
   handleOnChange = (event) => {
-    console.log("SET STATE: 1", this.state.firstName);
     this.setState(
       {
         [event.target.name]: event.target.value,
       },
       () => {
-        console.log("INSIDE SET STATE CALLBACK: 2", this.state.firstName);
+        if (
+          event.target.name === "firstName" ||
+          event.target.name === "lastName"
+        ) {
+          this.handleFirstNameAndLastNameInput(event);
+        }
+        if (event.target.name === "email") {
+          this.handleEmailInput();
+        }
+        if (event.target.name === "username") {
+          this.handleUsernameInput();
+        }
+        if (event.target.name === "password") {
+          this.handlePasswordInput();
+        }
       }
     );
-    console.log(
-      "THE VALUE OF THIS.SET.STATE.FIRST_NAME: 3",
-      this.state.firstName
-    );
-    if (this.state.firstName.length === 0) {
-      console.log("CANNOT BE EMPTY: 4", this.state.firstName.length);
+  };
+
+  handlePasswordInput = () => {
+    if (this.state.password.length === 0) {
+      this.setState({
+        passwordError: "Password cannot be empty!",
+      });
+    } else {
+      if (isStrongPassword(this.state.password)) {
+        this.setState({
+          passwordError: "",
+        });
+      } else {
+        this.setState({
+          passwordError:
+            "Password must contains 1 uppercase, 1 lowercase, 1 special character, 1 number and minimum of 8 characters long!",
+        });
+      }
+    }
+  };
+
+  handleEmailInput = () => {
+    if (this.state.email.length === 0) {
+      this.setState({
+        emailError: "Email cannot be empty!",
+      });
+    } else {
+      if (isEmail(this.state.email)) {
+        this.setState({
+          emailError: "",
+        });
+      } else {
+        this.setState({
+          emailError: "Please, enter a valid email!",
+        });
+      }
+    }
+  };
+
+  handleFirstNameAndLastNameInput = (event) => {
+    if (this.state[event.target.name].length > 0) {
+      if (isAlpha(this.state[event.target.name])) {
+        this.setState({
+          [`${event.target.name}Error`]: "",
+        });
+      } else {
+        this.setState({
+          [`${event.target.name}Error`]: `${event.target.placeholder} can only have 'A-Z'`,
+        });
+      }
+    } else {
+      this.setState({
+        [`${event.target.name}Error`]: `${event.target.placeholder} cannot be empty`,
+      });
+    }
+  };
+
+  handleEmailInput = () => {
+    if (this.state.email.length === 0) {
+      this.setState({
+        emailError: "Email cannot be empty!",
+      });
+    } else {
+      if (isEmail(this.state.email)) {
+        this.setState({
+          emailError: "",
+        });
+      } else {
+        this.setState({
+          emailError: "Please, enter a valid email!",
+        });
+      }
+    }
+  };
+
+  handleUsernameInput = () => {
+    if (this.state.username.length === 0) {
+      this.setState({
+        usernameError: "Username cannot be empty!",
+      });
+    } else {
+      if (isAlphanumeric(this.state.username)) {
+        this.setState({
+          usernameError: "",
+        });
+      } else {
+        this.setState({
+          usernameError: "Username can only have 'A-Z' and 'Numbers'!",
+        });
+      }
     }
   };
 
@@ -43,35 +141,10 @@ export class Signup extends Component {
 
   handleOnBlur = (event) => {
     console.log(event.target.name);
-    console.log("HANDLE ON BLUR TRIGGERED");
-    if (this.state.firstName.length === 0) {
+    console.log("handle onBlur Triggered");
+    if (this.state[event.target.name].length === 0) {
       this.setState({
-        firstNameError: "First Name Cannot Be Empty!",
-      });
-    }
-    if (this.state.lastName.length === 0) {
-      this.setState({
-        lastNameError: "Last Name Cannot Be Empty!",
-      });
-    }
-    if (this.state.email.length === 0) {
-      this.setState({
-        emailError: "Email Cannot Be Empty!",
-      });
-    }
-    if (this.state.username.length === 0) {
-      this.setState({
-        usernameError: "Username Cannot Be Empty!",
-      });
-    }
-    if (this.state.password.length === 0) {
-      this.setState({
-        passwordError: "Password Cannot Be Empty!",
-      });
-    }
-    if (this.state.confirmPassword.length === 0) {
-      this.setState({
-        confirmPasswordError: "Confirm Password Cannot Be Empty!",
+        [`${event.target.name}Error`]: `${event.target.placeholder} cannot be empty!`,
       });
     }
   };
@@ -86,14 +159,14 @@ export class Signup extends Component {
       confirmPassword,
       firstNameError,
       lastNameError,
-      emailError,
       usernameError,
+      emailError,
       passwordError,
       confirmPasswordError,
     } = this.state;
     return (
       <div className="container">
-        <div className="form-text">Sign up</div>
+        <div className="form-text">SIGN UP</div>
         <div className="form-div">
           <form className="form" onSubmit={this.handleOnSubmit}>
             <div className="form-group-inline">
@@ -106,8 +179,8 @@ export class Signup extends Component {
                   placeholder="First Name"
                   name="firstName"
                   onChange={this.handleOnChange}
-                  autoFocus
                   onBlur={this.handleOnBlur}
+                  autoFocus
                 />
                 <div className="errorMessage pt-1 font-semibold">
                   {firstNameError && firstNameError}
@@ -122,7 +195,6 @@ export class Signup extends Component {
                   placeholder="Last Name"
                   name="lastName"
                   onChange={this.handleOnChange}
-                  autoFocus
                   onBlur={this.handleOnBlur}
                 />
                 <div className="errorMessage pt-1 font-semibold">
@@ -132,25 +204,7 @@ export class Signup extends Component {
             </div>
             <div className="form-group-block">
               <div className="block-container">
-                <label htmlFor="email">Email</label>
-                <input
-                  type="text"
-                  id="email"
-                  value={email}
-                  placeholder="Email"
-                  name="email"
-                  onChange={this.handleOnChange}
-                  autoFocus
-                  onBlur={this.handleOnBlur}
-                />
-                <div className="errorMessage pt-1 font-semibold">
-                  {emailError && emailError}
-                </div>
-              </div>
-            </div>
-            <div className="form-group-block">
-              <div className="block-container">
-                <label htmlFor="username">Username</label>
+                <label htmlFor="email">Username</label>
                 <input
                   type="text"
                   id="username"
@@ -158,11 +212,27 @@ export class Signup extends Component {
                   placeholder="Username"
                   name="username"
                   onChange={this.handleOnChange}
-                  autoFocus
                   onBlur={this.handleOnBlur}
                 />
                 <div className="errorMessage pt-1 font-semibold">
                   {usernameError && usernameError}
+                </div>
+              </div>
+            </div>
+            <div className="form-group-block">
+              <div className="block-container">
+                <label htmlFor="username">Email</label>
+                <input
+                  type="text"
+                  id="email"
+                  value={email}
+                  placeholder="Email"
+                  name="email"
+                  onChange={this.handleOnChange}
+                  onBlur={this.handleOnBlur}
+                />
+                <div className="errorMessage pt-1 font-semibold">
+                  {emailError && emailError}
                 </div>
               </div>
             </div>
@@ -176,7 +246,6 @@ export class Signup extends Component {
                   placeholder="Password"
                   name="password"
                   onChange={this.handleOnChange}
-                  autoFocus
                   onBlur={this.handleOnBlur}
                 />
                 <div className="errorMessage pt-1 font-semibold">
@@ -194,7 +263,6 @@ export class Signup extends Component {
                   placeholder="Confirm Password"
                   name="confirmPassword"
                   onChange={this.handleOnChange}
-                  autoFocus
                   onBlur={this.handleOnBlur}
                 />
                 <div className="errorMessage pt-1 font-semibold">
@@ -203,7 +271,7 @@ export class Signup extends Component {
               </div>
             </div>
             <div className="button-container">
-              <button>Submit</button>
+              <button class="bg-red-500 hover:bg-red-600">Submit</button>
             </div>
           </form>
         </div>

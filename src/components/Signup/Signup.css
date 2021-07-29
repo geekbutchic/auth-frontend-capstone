@@ -1,5 +1,5 @@
 body {
-  background-image: url(https://media.giphy.com/media/cmOG2ZP7YeSPNgqVJX/giphy.gif);
+  background-image: url(https://media.giphy.com/media/U7KEaEro8JJMFeumBY/giphy.gif);
 }
 
 .container {
@@ -14,10 +14,10 @@ body {
   left: 0;
   right: 0;
   margin: auto;
-  border-radius: 25px;
+  border-radius: 15px;
 }
 
-.form-text {    
+.form-text {
   text-align: center;
   margin: 25px 25px;
   font-size: 40px;
